@@ -14,3 +14,9 @@ Here you are an example authentication flow with Oauth:
 1. receives an `Access Token`
 1. Service can now use this `Access Token`
 1. Service can access User's Google Calendar, but not his Google Drive or other resources
+
+### Tokens
+There are two kinds: `Access Token` and `Refresh Token`. The access tokens tend to be **short lived**, the the refreshed token is used once the access token has expired in order to retrieve a new access token.
+
+#### Access Token
+
