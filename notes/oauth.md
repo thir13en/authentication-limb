@@ -19,4 +19,5 @@ Here you are an example authentication flow with Oauth:
 There are two kinds: `Access Token` and `Refresh Token`. The access tokens tend to be **short lived**, the the refreshed token is used once the access token has expired in order to retrieve a new access token.
 
 #### Access Token
+With a `short-lived access token`, we can use a `JWT Token` to make a **self-encoded access token**.
 
