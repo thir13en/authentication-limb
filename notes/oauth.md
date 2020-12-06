@@ -25,3 +25,7 @@ With a `short-lived access token`, we can use a `JWT Token` to make a **self-enc
 A `refresh token` is a special token that is used to obtain a new `Access Token`. Since this is long-lived, refresh tokens **are generally opaque strings stored in the database**. Storing refresh tokens in the database **allows you to revoke them by deleting it from the database**.  
 Because **there is no way to expire an Access Token**, we should make the access token short-lived. Revoking the refresh token prevents malicious parties from refreshing an expired Access Token. This means that **if your Access Token expires in 1 hour, then an attacker who obtained your Access Token can only access your API for 1 hour** before it expires.
 
+### Best way to persists OAuth 2.0 tokens
+1. Store your access token in `localStorage`: **prone to XSS**.
+1.Store your access token in `httpOnly` cookie: **prone to CSRF but can be mitigated**, a bit **better in terms of exposure to XSS**.
+1. Store the refresh token in `httpOnly` cookie: **safe from CSRF, a bit better in terms of exposure to XSS**. We'll go over how **Option 3 works as it is the best out of the 3 options**.
