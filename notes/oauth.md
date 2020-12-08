@@ -29,3 +29,6 @@ Because **there is no way to expire an Access Token**, we should make the access
 1. Store your access token in `localStorage`: **prone to XSS**.
 1.Store your access token in `httpOnly` cookie: **prone to CSRF but can be mitigated**, a bit **better in terms of exposure to XSS**.
 1. Store the refresh token in `httpOnly` cookie: **safe from CSRF, a bit better in terms of exposure to XSS**. We'll go over how **Option 3 works as it is the best out of the 3 options**.
+
+#### Why is this safe from CSRF?
+Although a form submit to `/refresh_token` will work and a new `access token` will be returned, the attacker can't read the `response` if they're using an `HTML `form. To prevent the attacker from successfully making a fetch or `AJAX request` and read the response, this **requires the Authorization Server's `CORS` policy to be set up correctly** to prevent requests from unauthorized websites.
