@@ -32,3 +32,21 @@ Because **there is no way to expire an Access Token**, we should make the access
 
 #### Why is this safe from CSRF?
 Although a form submit to `/refresh_token` will work and a new `access token` will be returned, the attacker can't read the `response` if they're using an `HTML `form. To prevent the attacker from successfully making a fetch or `AJAX request` and read the response, this **requires the Authorization Server's `CORS` policy to be set up correctly** to prevent requests from unauthorized websites.
+
+### How to setup
+
+Authorization Server will return an `access_token` and a `refresh_token`. The `access_token` will be included in the `Response body` and the `refresh_token` will be included in the `cookie`.
+
+#### Refresh Token cookie setup:
+
+* Use the `httpOnly` flag to **prevent `JavaScript` from reading** it.
+* Use the `secure=true` flag so it can only be sent over `HTTPS`.
+* Use the `SameSite=strict` flag whenever possible to prevent `CSRF`. This can only be used if the Authorization Server has the same site as your front-end. If this is not the case, your **Authorization Server must set CORS headers in the back-end or use other methods to ensure that the refresh token request can only be done by authorized websites**.
+
+#### Store the access token in memory
+
+Put this `access token` in a variable in your front-end site.
+
+#### Step 3: Renew access token using the refresh token
+
+When the `access token` is gone or has expired, hit the `/refresh_token` endpoint and the `refresh token` that was stored in the cookie in step 1 will be included in the request. You'll get a new `access token` and can then use that for your API Requests.
